@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Text, View, TouchableOpacity } from 'react-native';
+const authserverURL = 'http://localhost:3000/api/registration'
 
 export default class Register extends Component {
     constructor(props) {
@@ -7,10 +8,25 @@ export default class Register extends Component {
         this.state = {
             username: '',
             password: '',
-            name: '',
+            firstname: '',
+            lastname: '',
             age: '',
             email: ''
         }
+        this.register = this.register.bind(this)
+    }
+    register(data){
+        console.log(data)
+        fetch(authserverURL, {
+            method: 'POST',
+            body:JSON.stringify(this.state),
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            mode: 'cors',
+        }).then((response)=> {
+            console.log(response)
+        })
     }
     render(){
         return(      
@@ -32,8 +48,14 @@ export default class Register extends Component {
                 />
                 <TextInput
                     value={this.state.name}
-                    onChangeText={(name) => this.setState({ name })}
-                    placeholder={'Name'}
+                    onChangeText={(firstname) => this.setState({ firstname })}
+                    placeholder={'First Name'}
+                    style={styles.input}
+                />
+                <TextInput
+                    value={this.state.name}
+                    onChangeText={(lastname) => this.setState({ lastname })}
+                    placeholder={'Last Name'}
                     style={styles.input}
                 />
                 <TextInput
@@ -50,7 +72,7 @@ export default class Register extends Component {
                 />
                 <TouchableOpacity
                 style={styles.button}
-                onPress = {() => this.props.navigation.navigate('Login')}
+                onPress = {()=> this.register(this.state)}
                 ><Text>Register</Text></TouchableOpacity>
             </View>
         )
