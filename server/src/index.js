@@ -1,6 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga')
 
 // typeDefs defines GraphQL schema. Exclamation mark indicates field can never be null.
+// TODO: generate schemas
 const typeDefs = `
 type Query {
     info: String!
